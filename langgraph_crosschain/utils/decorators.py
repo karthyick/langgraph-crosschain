@@ -51,9 +51,7 @@ def retry(
                 except exceptions as e:
                     last_exception = e
                     if attempt == max_attempts:
-                        logger.error(
-                            f"{func.__name__} failed after {max_attempts} attempts: {e}"
-                        )
+                        logger.error(f"{func.__name__} failed after {max_attempts} attempts: {e}")
                         raise
 
                     logger.warning(
@@ -153,9 +151,7 @@ def measure_time(
 
             if log_result:
                 func_logger = get_logger(func.__module__)
-                func_logger.debug(
-                    f"{func.__name__} executed in {execution_time:.4f} seconds"
-                )
+                func_logger.debug(f"{func.__name__} executed in {execution_time:.4f} seconds")
 
             return result
 

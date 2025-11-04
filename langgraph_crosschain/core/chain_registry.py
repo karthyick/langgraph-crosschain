@@ -46,10 +46,7 @@ class ChainRegistry:
         self._initialized = True
 
     def register(
-        self,
-        chain_id: str,
-        chain: Any,
-        metadata: Optional[Dict[str, Any]] = None
+        self, chain_id: str, chain: Any, metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """
         Register a chain in the registry.

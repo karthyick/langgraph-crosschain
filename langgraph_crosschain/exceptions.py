@@ -90,9 +90,7 @@ class MessageTimeoutError(CrossChainError):
         """
         self.target = target
         self.timeout = timeout
-        super().__init__(
-            f"Timeout waiting for response from '{target}' after {timeout}s"
-        )
+        super().__init__(f"Timeout waiting for response from '{target}' after {timeout}s")
 
 
 class SharedStateError(CrossChainError):

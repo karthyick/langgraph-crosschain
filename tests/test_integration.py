@@ -264,9 +264,7 @@ class TestComplexWorkflows:
 
             return func
 
-        workers = [
-            CrossChainNode(f"worker{i}", "work", worker_func(i)) for i in range(3)
-        ]
+        workers = [CrossChainNode(f"worker{i}", "work", worker_func(i)) for i in range(3)]
 
         # Execute
         coordinator({})
@@ -361,10 +359,7 @@ class TestConcurrency:
                         wait_for_response=False,
                     )
 
-        threads = [
-            threading.Thread(target=send_messages, args=(f"chain{i}",))
-            for i in range(5)
-        ]
+        threads = [threading.Thread(target=send_messages, args=(f"chain{i}",)) for i in range(5)]
 
         for t in threads:
             t.start()

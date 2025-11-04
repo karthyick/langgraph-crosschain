@@ -173,8 +173,7 @@ class TestDistributedProcessing:
             return func
 
         workers = [
-            CrossChainNode(f"worker{i}", "processor", worker_func(i))
-            for i in range(num_workers)
+            CrossChainNode(f"worker{i}", "processor", worker_func(i)) for i in range(num_workers)
         ]
 
         # Execute coordinator

@@ -73,6 +73,7 @@ class TestCrossChainNode:
 
     def test_create_node(self):
         """Test creating a cross-chain node."""
+
         def test_func(state):
             return state
 
@@ -88,6 +89,7 @@ class TestCrossChainNode:
 
     def test_node_execution(self):
         """Test executing a node function."""
+
         def test_func(state):
             state["processed"] = True
             return state
@@ -106,6 +108,7 @@ class TestCrossChainNode:
 
     def test_full_id_property(self):
         """Test the full_id property."""
+
         def test_func(state):
             return state
 
@@ -119,6 +122,7 @@ class TestCrossChainNode:
 
     def test_call_remote(self):
         """Test calling a remote node."""
+
         def test_func(state):
             return state
 
@@ -146,6 +150,7 @@ class TestCrossChainNode:
 
     def test_call_remote_to_nonexistent_chain_raises_error(self):
         """Test that calling a nonexistent chain raises KeyError."""
+
         def test_func(state):
             return state
 
@@ -164,6 +169,7 @@ class TestCrossChainNode:
 
     def test_call_remote_with_response(self):
         """Test calling a remote node and waiting for response."""
+
         def test_func(state):
             return state
 
@@ -190,6 +196,7 @@ class TestCrossChainNode:
 
     def test_call_remote_timeout(self):
         """Test that waiting for response times out correctly."""
+
         def test_func(state):
             return state
 
@@ -210,6 +217,7 @@ class TestCrossChainNode:
 
     def test_broadcast(self):
         """Test broadcasting to multiple chains."""
+
         def test_func(state):
             return state
 
@@ -241,6 +249,7 @@ class TestCrossChainNode:
 
     def test_process_incoming_messages(self):
         """Test processing incoming cross-chain messages."""
+
         def test_func(state):
             return state
 

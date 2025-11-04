@@ -59,9 +59,7 @@ def validate_message_payload(payload: Any) -> None:
         InvalidMessageError: If the payload is invalid
     """
     if not isinstance(payload, dict):
-        raise InvalidMessageError(
-            f"Message payload must be a dictionary, got {type(payload)}"
-        )
+        raise InvalidMessageError(f"Message payload must be a dictionary, got {type(payload)}")
 
 
 def validate_timeout(timeout: Optional[float]) -> None:
@@ -76,9 +74,7 @@ def validate_timeout(timeout: Optional[float]) -> None:
     """
     if timeout is not None:
         if not isinstance(timeout, (int, float)):
-            raise InvalidMessageError(
-                f"Timeout must be a number, got {type(timeout)}"
-            )
+            raise InvalidMessageError(f"Timeout must be a number, got {type(timeout)}")
 
         if timeout <= 0:
             raise InvalidMessageError(f"Timeout must be positive, got {timeout}")
@@ -112,9 +108,7 @@ def validate_metadata(metadata: Any) -> None:
         InvalidMessageError: If the metadata is invalid
     """
     if metadata is not None and not isinstance(metadata, dict):
-        raise InvalidMessageError(
-            f"Metadata must be a dictionary or None, got {type(metadata)}"
-        )
+        raise InvalidMessageError(f"Metadata must be a dictionary or None, got {type(metadata)}")
 
 
 def is_valid_full_node_id(full_id: str) -> bool:

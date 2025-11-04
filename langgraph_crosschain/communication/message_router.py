@@ -95,14 +95,10 @@ class MessageRouter:
                     self._response_queues[response_key] = Queue()
 
             try:
-                response = self._response_queues[response_key].get(
-                    timeout=timeout
-                )
+                response = self._response_queues[response_key].get(timeout=timeout)
                 return response
             except Empty:
-                raise TimeoutError(
-                    f"Timeout waiting for response from {target_key}"
-                )
+                raise TimeoutError(f"Timeout waiting for response from {target_key}")
 
         return None
 
@@ -155,9 +151,7 @@ class MessageRouter:
 
         return messages
 
-    def send_response(
-        self, target_chain: str, target_node: str, response: Any
-    ) -> None:
+    def send_response(self, target_chain: str, target_node: str, response: Any) -> None:
         """
         Send a response back to a requesting node.
 
@@ -186,8 +180,7 @@ class MessageRouter:
             if chain_id:
                 # Clear only queues for specified chain
                 keys_to_clear = [
-                    k for k in self._message_queues.keys()
-                    if k.startswith(f"{chain_id}.")
+                    k for k in self._message_queues.keys() if k.startswith(f"{chain_id}.")
                 ]
                 for key in keys_to_clear:
                     self._message_queues[key] = Queue()

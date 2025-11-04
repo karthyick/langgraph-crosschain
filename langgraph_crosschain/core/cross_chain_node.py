@@ -168,9 +168,7 @@ class CrossChainNode(Generic[StateT]):
         if "cross_chain_messages" not in state:
             state["cross_chain_messages"] = []
 
-        state["cross_chain_messages"].extend(
-            [msg.model_dump() for msg in messages]
-        )
+        state["cross_chain_messages"].extend([msg.model_dump() for msg in messages])
 
         return state
 

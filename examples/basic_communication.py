@@ -13,6 +13,7 @@ from langgraph_crosschain import ChainRegistry, CrossChainNode
 # Define state type
 class State(Dict[str, Any]):
     """State type for the chains."""
+
     pass
 
 
@@ -25,11 +26,7 @@ def create_chain1():
         data = state.get("data", "default_data")
 
         # Create a cross-chain node to call chain2
-        node = CrossChainNode(
-            chain_id="chain1",
-            node_id="analyzer",
-            func=lambda s: s
-        )
+        node = CrossChainNode(chain_id="chain1", node_id="analyzer", func=lambda s: s)
 
         # Call a node in chain2
         result = node.call_remote(
@@ -37,7 +34,7 @@ def create_chain1():
             target_node="processor",
             payload={"analyzed_data": f"analyzed_{data}"},
             wait_for_response=True,
-            timeout=5.0
+            timeout=5.0,
         )
 
         state["analysis_result"] = result
@@ -82,12 +79,9 @@ def create_chain2():
 
             # Send response back
             from langgraph_crosschain.communication.message_router import MessageRouter
+
             router = MessageRouter()
-            router.send_response(
-                msg["source_chain"],
-                msg["source_node"],
-                {"processed": processed}
-            )
+            router.send_response(msg["source_chain"], msg["source_node"], {"processed": processed})
 
         return state
 

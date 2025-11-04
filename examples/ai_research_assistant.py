@@ -31,6 +31,7 @@ logger = get_logger(__name__)
 # Define state type
 class State(Dict[str, Any]):
     """State type for all chains."""
+
     pass
 
 
@@ -38,11 +39,12 @@ class State(Dict[str, Any]):
 # STEP 1: Research Chain - Gathers information
 # ============================================================================
 
+
 def research_query(state: State) -> State:
     """Research the given topic and gather information."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("🔍 RESEARCH CHAIN: Starting research...")
-    print("="*70)
+    print("=" * 70)
 
     topic = state.get("topic", "")
     print(f"Topic: {topic}")
@@ -61,26 +63,26 @@ def research_query(state: State) -> State:
                 "title": f"Introduction to {topic}",
                 "content": f"Key concepts and fundamentals of {topic}...",
                 "relevance": 0.95,
-                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-intro"
+                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-intro",
             },
             {
                 "title": f"Advanced {topic} Techniques",
                 "content": f"Advanced methods and best practices for {topic}...",
                 "relevance": 0.88,
-                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-advanced"
+                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-advanced",
             },
             {
                 "title": f"{topic} Case Studies",
                 "content": f"Real-world applications and examples of {topic}...",
                 "relevance": 0.82,
-                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-cases"
-            }
+                "url": f"https://example.com/{topic.lower().replace(' ', '-')}-cases",
+            },
         ],
         "key_findings": [
             f"{topic} is widely used in modern applications",
             f"Best practices for {topic} include systematic approaches",
-            f"Common challenges with {topic} involve scalability and implementation"
-        ]
+            f"Common challenges with {topic} involve scalability and implementation",
+        ],
     }
 
     # Store in shared state for other chains
@@ -107,11 +109,12 @@ def create_research_chain():
 # STEP 2: Analysis Chain - Analyzes the research
 # ============================================================================
 
+
 def analyze_results(state: State) -> State:
     """Analyze the research results and extract insights."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("📊 ANALYSIS CHAIN: Analyzing research results...")
-    print("="*70)
+    print("=" * 70)
 
     manager = SharedStateManager()
     research = manager.get("research_results")
@@ -135,12 +138,12 @@ def analyze_results(state: State) -> State:
         "insights": [
             f"Primary insight: {research['topic']} is essential for modern technology stacks",
             f"Secondary insight: Most sources agree that proper implementation is crucial",
-            f"Key recommendation: When implementing {research['topic']}, start with fundamentals"
+            f"Key recommendation: When implementing {research['topic']}, start with fundamentals",
         ],
         "themes": ["fundamentals", "best practices", "real-world usage"],
         "confidence_score": avg_relevance,
         "source_quality": "high" if avg_relevance > 0.85 else "medium",
-        "citations_needed": len(research["sources"])
+        "citations_needed": len(research["sources"]),
     }
 
     # Store analysis
@@ -168,11 +171,12 @@ def create_analysis_chain():
 # STEP 3: Writer Chain - Generates the report
 # ============================================================================
 
+
 def write_report(state: State) -> State:
     """Generate a comprehensive report from the analysis."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("✍️  WRITER CHAIN: Writing report...")
-    print("="*70)
+    print("=" * 70)
 
     manager = SharedStateManager()
     research = manager.get("research_results")
@@ -200,15 +204,15 @@ def write_report(state: State) -> State:
                     f"relevance score of {analysis['confidence_score']:.2%}. "
                     f"Our analysis identified {len(analysis['themes'])} key themes and "
                     f"generated {len(analysis['insights'])} actionable insights."
-                )
+                ),
             },
             {
                 "heading": "Key Findings",
-                "content": "\n".join([f"• {finding}" for finding in research['key_findings']])
+                "content": "\n".join([f"• {finding}" for finding in research["key_findings"]]),
             },
             {
                 "heading": "Detailed Analysis",
-                "content": "\n".join([f"• {insight}" for insight in analysis['insights']])
+                "content": "\n".join([f"• {insight}" for insight in analysis["insights"]]),
             },
             {
                 "heading": "Recommendations",
@@ -217,19 +221,21 @@ def write_report(state: State) -> State:
                     f"we recommend a phased approach to implementing {research['topic']}. "
                     f"The identified themes of {', '.join(analysis['themes'])} should guide "
                     f"your implementation strategy."
-                )
+                ),
             },
             {
                 "heading": "References",
-                "content": "\n".join([
-                    f"[{i+1}] {source['title']} - {source['url']}"
-                    for i, source in enumerate(research['sources'])
-                ])
-            }
+                "content": "\n".join(
+                    [
+                        f"[{i+1}] {source['title']} - {source['url']}"
+                        for i, source in enumerate(research["sources"])
+                    ]
+                ),
+            },
         ],
         "word_count": 1250,
-        "references": len(research['sources']),
-        "created_at": "2025-11-04"
+        "references": len(research["sources"]),
+        "created_at": "2025-11-04",
     }
 
     # Store report
@@ -256,11 +262,12 @@ def create_writer_chain():
 # STEP 4: Quality Check Chain - Reviews the report
 # ============================================================================
 
+
 def quality_check(state: State) -> State:
     """Perform quality checks on the generated report."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("✅ QUALITY CHECK CHAIN: Reviewing report...")
-    print("="*70)
+    print("=" * 70)
 
     manager = SharedStateManager()
     report = manager.get("draft_report")
@@ -283,39 +290,42 @@ def quality_check(state: State) -> State:
     # Check 1: Accuracy (has references?)
     checks["accuracy"] = {
         "score": 0.95 if report.get("references", 0) >= 3 else 0.70,
-        "status": "pass" if report.get("references", 0) >= 3 else "warning"
+        "status": "pass" if report.get("references", 0) >= 3 else "warning",
     }
 
     # Check 2: Completeness (has all sections?)
-    expected_sections = ["Executive Summary", "Key Findings", "Detailed Analysis",
-                        "Recommendations", "References"]
+    expected_sections = [
+        "Executive Summary",
+        "Key Findings",
+        "Detailed Analysis",
+        "Recommendations",
+        "References",
+    ]
     section_headings = [s["heading"] for s in report.get("sections", [])]
     has_all_sections = all(section in section_headings for section in expected_sections)
     checks["completeness"] = {
         "score": 0.90 if has_all_sections else 0.60,
-        "status": "pass" if has_all_sections else "fail"
+        "status": "pass" if has_all_sections else "fail",
     }
 
     # Check 3: Clarity (word count reasonable?)
     word_count = report.get("word_count", 0)
     checks["clarity"] = {
         "score": 0.88 if 1000 <= word_count <= 3000 else 0.65,
-        "status": "pass" if 1000 <= word_count <= 3000 else "warning"
+        "status": "pass" if 1000 <= word_count <= 3000 else "warning",
     }
 
     # Check 4: Citations (references present?)
     checks["citations"] = {
         "score": 0.94 if "References" in section_headings else 0.50,
-        "status": "pass" if "References" in section_headings else "fail"
+        "status": "pass" if "References" in section_headings else "fail",
     }
 
     # Calculate overall score
     overall_score = sum(check["score"] for check in checks.values()) / len(checks)
 
     # Determine approval
-    approved = overall_score >= 0.80 and all(
-        check["status"] != "fail" for check in checks.values()
-    )
+    approved = overall_score >= 0.80 and all(check["status"] != "fail" for check in checks.values())
 
     issues_found = sum(1 for check in checks.values() if check["status"] != "pass")
 
@@ -323,7 +333,7 @@ def quality_check(state: State) -> State:
         "overall_score": overall_score,
         "checks": checks,
         "issues_found": issues_found,
-        "approved": approved
+        "approved": approved,
     }
 
     # Store quality results
@@ -338,7 +348,9 @@ def quality_check(state: State) -> State:
         print(f"   Issues: {issues_found}")
         for check_name, check_data in checks.items():
             if check_data["status"] != "pass":
-                print(f"   - {check_name}: {check_data['status']} (score: {check_data['score']:.2f})")
+                print(
+                    f"   - {check_name}: {check_data['status']} (score: {check_data['score']:.2f})"
+                )
 
     print(f"✓ Overall quality score: {quality_results['overall_score']:.2%}")
     print(f"✓ Issues found: {quality_results['issues_found']}")
@@ -361,6 +373,7 @@ def create_quality_chain():
 # ORCHESTRATOR: Coordinates the entire workflow
 # ============================================================================
 
+
 def run_research_workflow(topic: str) -> Dict[str, Any]:
     """
     Run the complete research workflow.
@@ -376,9 +389,9 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
         >>> print(result["final_report"]["title"])
         Research Report: Machine Learning
     """
-    print("\n" + "🚀 "*35)
+    print("\n" + "🚀 " * 35)
     print("AI RESEARCH ASSISTANT - Multi-Chain Workflow")
-    print("🚀 "*35)
+    print("🚀 " * 35)
     print(f"\nResearching topic: '{topic}'\n")
 
     # Create registry and state manager
@@ -430,9 +443,9 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
     final_state = manager.snapshot()
 
     # Display final report
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("📄 FINAL REPORT")
-    print("="*70)
+    print("=" * 70)
 
     final_report = final_state.get("final_report")
     if final_report:
@@ -443,10 +456,10 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
         print(f"Created: {final_report.get('created_at', 'N/A')}")
 
         print("\n--- Report Content ---\n")
-        for section in final_report['sections']:
+        for section in final_report["sections"]:
             print(f"\n## {section['heading']}")
-            print("-" * len(section['heading']))
-            content = section['content']
+            print("-" * len(section["heading"]))
+            content = section["content"]
             # Print first 300 chars of each section
             if len(content) > 300:
                 print(content[:300] + "...\n[Content truncated]")
@@ -456,17 +469,23 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
         print("⚠️  No final report available - quality check may have failed")
 
     # Display workflow summary
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("📊 WORKFLOW SUMMARY")
-    print("="*70)
+    print("=" * 70)
     quality_results = final_state.get("quality_results", {})
 
     # Check results (may be None due to LangGraph behavior)
-    research_complete = research_result.get('research_complete', False) if research_result else True
-    analysis_complete = analysis_result.get('analysis_complete', False) if analysis_result else True
-    writing_complete = writing_result.get('writing_complete', False) if writing_result else True
-    quality_complete = quality_result.get('quality_check_complete', False) if quality_result else True
-    report_approved = quality_result.get('report_approved', False) if quality_result else quality_results.get('approved', False)
+    research_complete = research_result.get("research_complete", False) if research_result else True
+    analysis_complete = analysis_result.get("analysis_complete", False) if analysis_result else True
+    writing_complete = writing_result.get("writing_complete", False) if writing_result else True
+    quality_complete = (
+        quality_result.get("quality_check_complete", False) if quality_result else True
+    )
+    report_approved = (
+        quality_result.get("report_approved", False)
+        if quality_result
+        else quality_results.get("approved", False)
+    )
 
     print(f"✓ Research completed: {research_complete}")
     print(f"✓ Analysis completed: {analysis_complete}")
@@ -478,17 +497,17 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
         print(f"✓ Issues found: {quality_results['issues_found']}")
 
     # Display chain statistics
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("🔧 CHAIN STATISTICS")
-    print("="*70)
+    print("=" * 70)
     print(f"Total chains used: {len(registry.list_chains())}")
     print(f"Chains: {', '.join(registry.list_chains())}")
     print(f"Shared state keys: {len(manager.keys())}")
     print(f"State keys: {', '.join(manager.keys())}")
 
-    print("\n" + "🎉 "*35)
+    print("\n" + "🎉 " * 35)
     print("WORKFLOW COMPLETED SUCCESSFULLY!")
-    print("🎉 "*35 + "\n")
+    print("🎉 " * 35 + "\n")
 
     return final_state
 
@@ -497,13 +516,14 @@ def run_research_workflow(topic: str) -> Dict[str, Any]:
 # MAIN EXECUTION
 # ============================================================================
 
+
 def main():
     """Run the AI research assistant with example topics."""
 
     # Example: Run a single research workflow
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("AI RESEARCH ASSISTANT DEMO")
-    print("="*70)
+    print("=" * 70)
 
     # You can change the topic here
     topic = "Machine Learning"
@@ -512,9 +532,9 @@ def main():
 
     # Show what was generated
     if result.get("final_report"):
-        print("\n" + "="*70)
+        print("\n" + "=" * 70)
         print("✅ SUCCESS - Report Generated!")
-        print("="*70)
+        print("=" * 70)
         print(f"\nYou can now use the generated report from the '{topic}' research.")
         print(f"The report has {result['final_report']['word_count']} words")
         print(f"and {result['final_report']['references']} references.")

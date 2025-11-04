@@ -37,9 +37,7 @@ class TestExceptions:
 
     def test_message_routing_error(self):
         """Test MessageRoutingError."""
-        error = exceptions.MessageRoutingError(
-            "chain1.node1", "chain2.node2", "Connection failed"
-        )
+        error = exceptions.MessageRoutingError("chain1.node1", "chain2.node2", "Connection failed")
         assert error.source == "chain1.node1"
         assert error.target == "chain2.node2"
         assert error.reason == "Connection failed"

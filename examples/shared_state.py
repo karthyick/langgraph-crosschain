@@ -13,6 +13,7 @@ from langgraph_crosschain import ChainRegistry, SharedStateManager
 # Define state type
 class State(Dict[str, Any]):
     """State type for the chains."""
+
     pass
 
 

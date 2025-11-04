@@ -16,6 +16,7 @@ from langgraph_crosschain import (
 # Define state type
 class State(Dict[str, Any]):
     """State type for the chains."""
+
     pass
 
 
@@ -32,7 +33,7 @@ def create_producer_chain():
         data = {
             "items": ["item1", "item2", "item3"],
             "timestamp": "2025-11-04",
-            "producer": "producer_chain"
+            "producer": "producer_chain",
         }
 
         # Store in shared state
@@ -98,7 +99,7 @@ def create_processor_chain():
             result = {
                 "original_items": data.get("items"),
                 "processed_items": processed_items,
-                "processed_by": "processor_chain"
+                "processed_by": "processor_chain",
             }
 
             # Store processed result

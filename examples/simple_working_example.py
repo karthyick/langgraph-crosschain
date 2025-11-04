@@ -13,6 +13,7 @@ from langgraph_crosschain import ChainRegistry, CrossChainNode, MessageRouter
 # Define state type
 class State(Dict[str, Any]):
     """State type for the chains."""
+
     pass
 
 
@@ -21,18 +22,14 @@ def send_message_node(state: State) -> State:
     print("Sender Chain: Sending message to receiver chain...")
 
     # Create cross-chain node
-    node = CrossChainNode(
-        chain_id="sender",
-        node_id="sender_node",
-        func=lambda s: s
-    )
+    node = CrossChainNode(chain_id="sender", node_id="sender_node", func=lambda s: s)
 
     # Send message (fire-and-forget, no response needed)
     node.call_remote(
         target_chain="receiver",
         target_node="receiver_node",
         payload={"message": "Hello from sender!", "data": state.get("data")},
-        wait_for_response=False
+        wait_for_response=False,
     )
 
     print("Sender Chain: Message sent!")
@@ -125,9 +122,7 @@ def main():
     print(f"Messages in queue: {len(messages)}")
 
     # Invoke receiver chain with the messages
-    receiver_state = {
-        "cross_chain_messages": [msg.model_dump() for msg in messages]
-    }
+    receiver_state = {"cross_chain_messages": [msg.model_dump() for msg in messages]}
     receiver_result = receiver_chain.invoke(receiver_state)
     print(f"Receiver result: {receiver_result}")
     print()

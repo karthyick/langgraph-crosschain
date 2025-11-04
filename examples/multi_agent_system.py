@@ -13,6 +13,7 @@ from langgraph_crosschain import ChainRegistry, CrossChainNode, SharedStateManag
 # Define state type
 class State(Dict[str, Any]):
     """State type for the chains."""
+
     pass
 
 
@@ -27,18 +28,14 @@ def create_coordinator_chain():
         print(f"Coordinator: Task is '{task}'")
 
         # Delegate to specialist agents
-        coordinator = CrossChainNode(
-            chain_id="coordinator",
-            node_id="planner",
-            func=lambda s: s
-        )
+        coordinator = CrossChainNode(chain_id="coordinator", node_id="planner", func=lambda s: s)
 
         # Broadcast task to all specialists
         print("Coordinator: Broadcasting task to specialists...")
         coordinator.broadcast(
             target_chains=["research_agent", "analysis_agent", "execution_agent"],
             target_node="process",
-            payload={"task": task, "delegated_by": "coordinator"}
+            payload={"task": task, "delegated_by": "coordinator"},
         )
 
         state["delegated"] = True
