@@ -140,3 +140,40 @@ class TestMessageRouter:
 
         assert messages_chain2 == []
         assert len(messages_chain1) == 1
+
+    def test_route_alias(self):
+        """Test that route() is an alias for route_message()."""
+        router = MessageRouter()
+
+        message = CrossChainMessage(
+            source_chain="chain1",
+            source_node="node1",
+            target_chain="chain2",
+            target_node="node2",
+            payload={"data": "test"},
+        )
+
+        # route() should work the same as route_message()
+        result = router.route(message)
+        assert result is None  # No response expected
+
+        # Verify message was routed
+        messages = router.get_messages_for("chain2", "node2")
+        assert len(messages) == 1
+        assert messages[0].payload == {"data": "test"}
+
+    def test_route_alias_with_params(self):
+        """Test route() alias with wait_for_response and timeout parameters."""
+        router = MessageRouter()
+
+        message = CrossChainMessage(
+            source_chain="chain1",
+            source_node="node1",
+            target_chain="chain2",
+            target_node="node2",
+            payload={"data": "test"},
+        )
+
+        # Test with parameters (should timeout)
+        with pytest.raises(TimeoutError):
+            router.route(message, wait_for_response=True, timeout=0.1)

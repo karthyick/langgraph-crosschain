@@ -80,18 +80,40 @@ class SharedStateManager:
         with self._lock:
             return deepcopy(self._state.get(key, default))
 
-    def update(self, key: str, updater: Callable[[Any], Any], notify: bool = True) -> None:
+    def update(
+        self, key: str, updater: Callable[[Any], Any] | dict[str, Any], notify: bool = True
+    ) -> None:
         """
-        Update a value using an updater function.
+        Update a value using an updater function or dict merge.
 
         Args:
             key: The state key
-            updater: Function that takes current value and returns new value
+            updater: Function that takes current value and returns new value,
+                    OR a dict to merge with the current value
             notify: Whether to notify subscribers of the change
+
+        Examples:
+            # With function
+            manager.update('counter', lambda x: (x or 0) + 1)
+
+            # With dict merge
+            manager.update('config', {'new_key': 'value'})
         """
         with self._lock:
             current = self._state.get(key)
-            new_value = updater(current)
+
+            # Handle dict merge
+            if isinstance(updater, dict):
+                if isinstance(current, dict):
+                    new_value = {**current, **updater}
+                else:
+                    new_value = updater
+            # Handle callable updater
+            elif callable(updater):
+                new_value = updater(current)
+            else:
+                raise TypeError("updater must be either a callable or a dict")
+
             self.set(key, new_value, notify)
 
     def delete(self, key: str) -> None:

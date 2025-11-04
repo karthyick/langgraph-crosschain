@@ -1,6 +1,5 @@
 """Tests for CrossChainNode."""
 
-
 import pytest
 
 from langgraph_crosschain.communication.message_router import MessageRouter

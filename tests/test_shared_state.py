@@ -43,6 +43,41 @@ class TestSharedStateManager:
 
         assert manager.get("counter") == 1
 
+    def test_update_with_dict_merge(self):
+        """Test updating state with dict merge."""
+        manager = SharedStateManager()
+
+        # Set initial dict
+        manager.set("config", {"key1": "value1", "key2": "value2"})
+
+        # Update with dict merge
+        manager.update("config", {"key2": "updated", "key3": "value3"})
+
+        result = manager.get("config")
+        assert result == {"key1": "value1", "key2": "updated", "key3": "value3"}
+
+    def test_update_with_dict_on_non_dict_value(self):
+        """Test updating non-dict value with dict replaces it."""
+        manager = SharedStateManager()
+
+        # Set non-dict value
+        manager.set("value", "string")
+
+        # Update with dict should replace
+        manager.update("value", {"key": "value"})
+
+        result = manager.get("value")
+        assert result == {"key": "value"}
+
+    def test_update_with_invalid_type_raises_error(self):
+        """Test that update with invalid type raises TypeError."""
+        manager = SharedStateManager()
+
+        manager.set("key", "value")
+
+        with pytest.raises(TypeError, match="must be either a callable or a dict"):
+            manager.update("key", "invalid")
+
     def test_delete(self):
         """Test deleting a key."""
         manager = SharedStateManager()

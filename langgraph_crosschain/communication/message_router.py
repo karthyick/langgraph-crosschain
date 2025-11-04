@@ -108,6 +108,25 @@ class MessageRouter:
 
         return None
 
+    def route(
+        self,
+        message: Any,
+        wait_for_response: bool = False,
+        timeout: Optional[float] = None,
+    ) -> Optional[Any]:
+        """
+        Convenience alias for route_message().
+
+        Args:
+            message: The CrossChainMessage to route
+            wait_for_response: Whether to wait for a response
+            timeout: Timeout in seconds (if wait_for_response=True)
+
+        Returns:
+            Response if wait_for_response=True, else None
+        """
+        return self.route_message(message, wait_for_response, timeout)
+
     def get_messages_for(
         self, chain_id: str, node_id: str, block: bool = False, timeout: Optional[float] = None
     ) -> list[Any]:
