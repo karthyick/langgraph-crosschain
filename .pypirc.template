@@ -1,0 +1,17 @@
+# Template for PyPI configuration
+# Copy this to ~/.pypirc (Linux/Mac) or %USERPROFILE%\.pypirc (Windows)
+# Replace the tokens with your actual API tokens
+# NEVER commit this file to version control!
+
+[distutils]
+index-servers =
+    pypi
+    testpypi
+
+[pypi]
+username = __token__
+password = pypi-YOUR-TOKEN-HERE
+
+[testpypi]
+username = __token__
+password = pypi-YOUR-TEST-TOKEN-HERE
