@@ -16,15 +16,6 @@ This framework addresses a critical gap in current AI agent frameworks by enabli
 
 ## 💡 Innovation Gap Being Addressed
 
-Current frameworks like LangChain and LangGraph lack the ability to:
-
-- ✗ Call nodes across different chains
-- ✗ Share state between separate chain instances
-- ✗ Create dynamic inter-chain workflows
-- ✗ Build modular, reusable chain components that can communicate
-
-**This framework solves all of these problems.**
-
 ## 🚀 Quick Start
 
 ### Installation
@@ -267,16 +258,6 @@ Check out the [examples](./examples) directory for complete working examples:
 - `multi_agent_system.py` - Building a multi-agent system
 - `distributed_workflow.py` - Distributed processing example
 
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -287,10 +268,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Inspired by the need for more modular AI agent architectures
 - Thanks to all contributors!
 
-## 📧 Contact
-
-- GitHub Issues: [Report a bug or request a feature](https://github.com/yourusername/langgraph-crosschain/issues)
-- Discussions: [Join the conversation](https://github.com/yourusername/langgraph-crosschain/discussions)
 
 ## 🗺️ Roadmap
 

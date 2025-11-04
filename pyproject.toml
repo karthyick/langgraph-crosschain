@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "Karthick Raja M", email = "karthick.mohan@outlook.com"}
+    {name = "Karthick", email = "karthickrajam18@gmail.com"}
 ]
 keywords = [
     "langgraph", 
