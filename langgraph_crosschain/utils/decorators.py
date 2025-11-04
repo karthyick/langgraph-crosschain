@@ -6,7 +6,8 @@ This module provides decorators for common patterns in cross-chain communication
 
 import functools
 import time
-from typing import Callable, TypeVar, Any, Optional
+from typing import Any, Callable, TypeVar
+
 from langgraph_crosschain.logging import get_logger
 
 logger = get_logger(__name__)

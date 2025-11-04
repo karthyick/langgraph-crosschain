@@ -5,12 +5,16 @@ This module provides the base class for nodes that can communicate
 across different LangGraph chains.
 """
 
-from typing import Any, Callable, Dict, Optional, TypeVar, Generic
-from pydantic import BaseModel
-from langgraph_crosschain.core.chain_registry import ChainRegistry
-from langgraph_crosschain.communication.message_router import MessageRouter
+from typing import TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar
 
-StateT = TypeVar("StateT", bound=Dict[str, Any])
+from pydantic import BaseModel
+
+from langgraph_crosschain.core.chain_registry import ChainRegistry
+
+if TYPE_CHECKING:
+    from langgraph_crosschain.communication.message_router import MessageRouter
+
+StateT = TypeVar("StateT", bound=dict[str, Any])
 
 
 class CrossChainMessage(BaseModel):
@@ -30,8 +34,8 @@ class CrossChainMessage(BaseModel):
     source_node: str
     target_chain: str
     target_node: str
-    payload: Dict[str, Any]
-    metadata: Optional[Dict[str, Any]] = None
+    payload: dict[str, Any]
+    metadata: Optional[dict[str, Any]] = None
 
 
 class CrossChainNode(Generic[StateT]):
@@ -59,7 +63,7 @@ class CrossChainNode(Generic[StateT]):
         node_id: str,
         func: Callable[[StateT], StateT],
         registry: Optional[ChainRegistry] = None,
-        router: Optional[MessageRouter] = None,
+        router: Optional["MessageRouter"] = None,
     ):
         """
         Initialize a cross-chain node.
@@ -75,7 +79,13 @@ class CrossChainNode(Generic[StateT]):
         self.node_id = node_id
         self.func = func
         self.registry = registry or ChainRegistry()
-        self.router = router or MessageRouter()
+
+        if router is None:
+            # Lazy import to avoid circular dependency
+            from langgraph_crosschain.communication.message_router import MessageRouter
+
+            router = MessageRouter()
+        self.router = router
 
     def __call__(self, state: StateT) -> StateT:
         """
@@ -103,7 +113,7 @@ class CrossChainNode(Generic[StateT]):
         self,
         target_chain: str,
         target_node: str,
-        payload: Dict[str, Any],
+        payload: dict[str, Any],
         wait_for_response: bool = False,
         timeout: Optional[float] = None,
     ) -> Optional[Any]:
@@ -138,7 +148,7 @@ class CrossChainNode(Generic[StateT]):
         self,
         target_chains: list[str],
         target_node: str,
-        payload: Dict[str, Any],
+        payload: dict[str, Any],
     ) -> None:
         """
         Broadcast a message to the same node across multiple chains.

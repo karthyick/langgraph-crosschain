@@ -4,9 +4,10 @@ Shared State Manager for cross-chain communication.
 This module provides mechanisms for sharing state between different chains.
 """
 
-from typing import Any, Dict, Optional, Set, Callable
+import builtins
 import threading
 from copy import deepcopy
+from typing import Any, Callable, Optional
 
 
 class SharedStateManager:
@@ -39,8 +40,8 @@ class SharedStateManager:
         if self._initialized:
             return
 
-        self._state: Dict[str, Any] = {}
-        self._subscribers: Dict[str, Set[Callable[[Any], None]]] = {}
+        self._state: dict[str, Any] = {}
+        self._subscribers: dict[str, set[Callable[[Any], None]]] = {}
         self._lock = threading.RLock()
         self._initialized = True
 
@@ -54,7 +55,7 @@ class SharedStateManager:
             notify: Whether to notify subscribers of the change
         """
         with self._lock:
-            old_value = self._state.get(key)
+            self._state.get(key)
             self._state[key] = deepcopy(value)
 
             if notify and key in self._subscribers:
@@ -145,7 +146,7 @@ class SharedStateManager:
             self._state.clear()
             self._subscribers.clear()
 
-    def keys(self) -> Set[str]:
+    def keys(self) -> builtins.set[str]:
         """
         Get all keys in the shared state.
 
@@ -165,7 +166,7 @@ class SharedStateManager:
         with self._lock:
             return len(self._state)
 
-    def snapshot(self) -> Dict[str, Any]:
+    def snapshot(self) -> dict[str, Any]:
         """
         Get a snapshot of the entire shared state.
 

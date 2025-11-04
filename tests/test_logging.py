@@ -1,12 +1,12 @@
 """Tests for logging utilities."""
 
-import pytest
 import logging
+
 from langgraph_crosschain.logging import (
-    get_logger,
     configure_logging,
     disable_logging,
     enable_debug_logging,
+    get_logger,
 )
 
 

@@ -16,8 +16,10 @@ Key Concepts Demonstrated:
     - Production-ready structure
 """
 
-from typing import Dict, Any, List
-from langgraph.graph import StateGraph, END
+from typing import Any
+
+from langgraph.graph import END, StateGraph
+
 from langgraph_crosschain import (
     ChainRegistry,
     SharedStateManager,
@@ -29,7 +31,7 @@ logger = get_logger(__name__)
 
 
 # Define state type
-class State(Dict[str, Any]):
+class State(dict[str, Any]):
     """State type for all chains."""
 
     pass
@@ -137,7 +139,7 @@ def analyze_results(state: State) -> State:
         "topic": research["topic"],
         "insights": [
             f"Primary insight: {research['topic']} is essential for modern technology stacks",
-            f"Secondary insight: Most sources agree that proper implementation is crucial",
+            "Secondary insight: Most sources agree that proper implementation is crucial",
             f"Key recommendation: When implementing {research['topic']}, start with fundamentals",
         ],
         "themes": ["fundamentals", "best practices", "real-world usage"],
@@ -374,7 +376,7 @@ def create_quality_chain():
 # ============================================================================
 
 
-def run_research_workflow(topic: str) -> Dict[str, Any]:
+def run_research_workflow(topic: str) -> dict[str, Any]:
     """
     Run the complete research workflow.
 

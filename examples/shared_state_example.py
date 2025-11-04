@@ -4,17 +4,18 @@ Advanced Example - Using Shared State for Coordination
 This example shows how multiple chains can coordinate using shared state.
 """
 
-from typing import Dict, Any
-from langgraph.graph import StateGraph, END
+from typing import Any
+
+from langgraph.graph import END, StateGraph
+
 from langgraph_crosschain import (
     ChainRegistry,
-    CrossChainNode,
     SharedStateManager,
 )
 
 
 # Define state type
-class State(Dict[str, Any]):
+class State(dict[str, Any]):
     """State type for the chains."""
 
     pass
@@ -148,21 +149,21 @@ def main():
     print("-" * 70)
     print("STEP 1: Producer produces data")
     print("-" * 70)
-    producer_result = producer.invoke({})
+    producer.invoke({})
     print()
 
     # Step 2: Consumer reads the data
     print("-" * 70)
     print("STEP 2: Consumer reads data")
     print("-" * 70)
-    consumer_result = consumer.invoke({})
+    consumer.invoke({})
     print()
 
     # Step 3: Processor processes the data
     print("-" * 70)
     print("STEP 3: Processor processes data")
     print("-" * 70)
-    processor_result = processor.invoke({})
+    processor.invoke({})
     print()
 
     # Step 4: Show final state

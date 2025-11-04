@@ -1,8 +1,9 @@
 """Pytest configuration and fixtures."""
 
 import pytest
-from langgraph_crosschain.core.chain_registry import ChainRegistry
+
 from langgraph_crosschain.communication.message_router import MessageRouter
+from langgraph_crosschain.core.chain_registry import ChainRegistry
 from langgraph_crosschain.state.shared_state import SharedStateManager
 
 

@@ -1,6 +1,5 @@
 """Tests for custom exceptions."""
 
-import pytest
 from langgraph_crosschain import exceptions
 
 

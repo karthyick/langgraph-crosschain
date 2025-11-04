@@ -4,7 +4,8 @@ Validation utilities for the cross-chain framework.
 This module provides validation functions for common operations.
 """
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
+
 from langgraph_crosschain.exceptions import InvalidMessageError
 
 

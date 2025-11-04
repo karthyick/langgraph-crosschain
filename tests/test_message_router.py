@@ -1,6 +1,7 @@
 """Tests for MessageRouter."""
 
 import pytest
+
 from langgraph_crosschain.communication.message_router import MessageRouter
 from langgraph_crosschain.core.chain_registry import ChainRegistry
 from langgraph_crosschain.core.cross_chain_node import CrossChainMessage

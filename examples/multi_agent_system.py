@@ -5,13 +5,15 @@ This example demonstrates how to build a multi-agent system where
 different specialized chains (agents) collaborate on a task.
 """
 
-from typing import Dict, Any
-from langgraph.graph import StateGraph, END
+from typing import Any
+
+from langgraph.graph import END, StateGraph
+
 from langgraph_crosschain import ChainRegistry, CrossChainNode, SharedStateManager
 
 
 # Define state type
-class State(Dict[str, Any]):
+class State(dict[str, Any]):
     """State type for the chains."""
 
     pass

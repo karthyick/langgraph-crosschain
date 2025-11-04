@@ -4,11 +4,12 @@ Message Router for cross-chain communication.
 This module handles routing of messages between chains and nodes.
 """
 
-from typing import Any, Dict, List, Optional
 import threading
-import time
-from queue import Queue, Empty
-from langgraph_crosschain.core.chain_registry import ChainRegistry
+from queue import Empty, Queue
+from typing import TYPE_CHECKING, Any, Optional
+
+if TYPE_CHECKING:
+    from langgraph_crosschain.core.chain_registry import ChainRegistry
 
 
 class MessageRouter:
@@ -35,7 +36,7 @@ class MessageRouter:
                     cls._instance._initialized = False
         return cls._instance
 
-    def __init__(self, registry: Optional[ChainRegistry] = None):
+    def __init__(self, registry: Optional["ChainRegistry"] = None):
         """
         Initialize the message router.
 
@@ -45,9 +46,14 @@ class MessageRouter:
         if self._initialized:
             return
 
-        self.registry = registry or ChainRegistry()
-        self._message_queues: Dict[str, Queue] = {}
-        self._response_queues: Dict[str, Queue] = {}
+        if registry is None:
+            # Lazy import to avoid circular dependency
+            from langgraph_crosschain.core.chain_registry import ChainRegistry
+
+            registry = ChainRegistry()
+        self.registry = registry
+        self._message_queues: dict[str, Queue] = {}
+        self._response_queues: dict[str, Queue] = {}
         self._lock = threading.RLock()
         self._initialized = True
 
@@ -104,7 +110,7 @@ class MessageRouter:
 
     def get_messages_for(
         self, chain_id: str, node_id: str, block: bool = False, timeout: Optional[float] = None
-    ) -> List[Any]:
+    ) -> list[Any]:
         """
         Get all pending messages for a specific chain/node.
 

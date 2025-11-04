@@ -5,13 +5,15 @@ This example demonstrates how to use the SharedStateManager to share
 state between multiple chains.
 """
 
-from typing import Dict, Any
-from langgraph.graph import StateGraph, END
+from typing import Any
+
+from langgraph.graph import END, StateGraph
+
 from langgraph_crosschain import ChainRegistry, SharedStateManager
 
 
 # Define state type
-class State(Dict[str, Any]):
+class State(dict[str, Any]):
     """State type for the chains."""
 
     pass
@@ -156,7 +158,7 @@ def main():
     print("\n" + "-" * 60)
     print("Running reader chain...")
     print("-" * 60)
-    result = reader_chain.invoke({})
+    reader_chain.invoke({})
 
     print("\n" + "-" * 60)
     print("Final State Snapshot:")

@@ -5,9 +5,8 @@ This module provides a centralized registry for managing and accessing
 multiple chain instances across the application.
 """
 
-from typing import Any, Dict, Optional, Set
 import threading
-from langgraph.graph import StateGraph
+from typing import Any, Optional
 
 
 class ChainRegistry:
@@ -40,13 +39,13 @@ class ChainRegistry:
         if self._initialized:
             return
 
-        self._chains: Dict[str, Any] = {}
-        self._metadata: Dict[str, Dict[str, Any]] = {}
+        self._chains: dict[str, Any] = {}
+        self._metadata: dict[str, dict[str, Any]] = {}
         self._lock = threading.RLock()
         self._initialized = True
 
     def register(
-        self, chain_id: str, chain: Any, metadata: Optional[Dict[str, Any]] = None
+        self, chain_id: str, chain: Any, metadata: Optional[dict[str, Any]] = None
     ) -> None:
         """
         Register a chain in the registry.
@@ -101,7 +100,7 @@ class ChainRegistry:
                 raise KeyError(f"Chain '{chain_id}' not found in registry")
             return self._chains[chain_id]
 
-    def get_metadata(self, chain_id: str) -> Dict[str, Any]:
+    def get_metadata(self, chain_id: str) -> dict[str, Any]:
         """
         Get metadata for a chain.
 
@@ -119,7 +118,7 @@ class ChainRegistry:
                 raise KeyError(f"Chain '{chain_id}' not found in registry")
             return self._metadata[chain_id].copy()
 
-    def list_chains(self) -> Set[str]:
+    def list_chains(self) -> set[str]:
         """
         List all registered chain IDs.
 

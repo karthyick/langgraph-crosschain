@@ -1,6 +1,7 @@
 """Tests for ChainRegistry."""
 
 import pytest
+
 from langgraph_crosschain.core.chain_registry import ChainRegistry
 
 

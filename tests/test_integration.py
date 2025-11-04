@@ -4,10 +4,11 @@ Integration tests for cross-chain communication.
 These tests verify that all components work together correctly.
 """
 
-import pytest
-import time
 import threading
-from typing import Dict, Any
+import time
+
+import pytest
+
 from langgraph_crosschain import (
     ChainRegistry,
     CrossChainNode,
@@ -41,7 +42,7 @@ class TestBasicCrossChainCommunication:
             return state
 
         sender = CrossChainNode("chain1", "sender", sender_func)
-        receiver = CrossChainNode("chain2", "receiver", receiver_func)
+        CrossChainNode("chain2", "receiver", receiver_func)
 
         # Send message
         sender.call_remote(
