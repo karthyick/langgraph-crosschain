@@ -322,8 +322,4 @@ If `langgraph-crosschain` unblocks your multi-agent work, these might too:
 
 ---
 
-## ⭐ Star on GitHub
-
-If this saved you from rolling your own message queue, [star the repo](https://github.com/karthyick/langgraph-crosschain) — it helps others find it.
-
 Built by [Karthick Raja M](https://github.com/karthyick) · [aichargeworks.com](https://aichargeworks.com)
