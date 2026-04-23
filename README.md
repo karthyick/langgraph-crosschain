@@ -1,9 +1,36 @@
-# LangGraph Cross-Chain Communication Framework
+# langgraph-crosschain
 
+> **Call a node in one LangGraph chain directly from a node in another.**
+
+[![PyPI version](https://img.shields.io/pypi/v/langgraph-crosschain.svg?color=8B5CF6)](https://pypi.org/project/langgraph-crosschain/)
+[![Downloads](https://static.pepy.tech/badge/langgraph-crosschain)](https://pepy.tech/project/langgraph-crosschain)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/karthyick/langgraph-crosschain?style=social)](https://github.com/karthyick/langgraph-crosschain)
 
-A Python package extending LangGraph to enable cross-chain node communication - allowing nodes in different chains to call and communicate with each other directly.
+Vanilla LangGraph treats each chain as an island — `Chain1.NodeA` can't call `Chain2.NodeB`. This package adds a **chain registry + router + shared state manager** so specialized agents can call into each other without bolting on message queues.
+
+⭐ **[Star on GitHub](https://github.com/karthyick/langgraph-crosschain)** if this unblocks your multi-agent architecture.
+
+---
+
+## The Problem
+
+```
+Standard LangGraph:
+  Chain_A.Node1 → Chain_A.Node2 → Chain_A.Node3 → DONE
+  Chain_B.NodeX → Chain_B.NodeY → Chain_B.NodeZ → DONE
+  (no way to go A.Node2 → B.NodeY)
+
+With langgraph-crosschain:
+  Chain_A.Node2 ──cross-chain call──► Chain_B.NodeY ──returns────┐
+       │                                                          │
+       └──────────── continues with result ◄──────────────────────┘
+```
+
+Build modular agents that talk to each other instead of one monolithic graph.
+
+---
 
 ## 🎯 Project Overview
 
@@ -283,4 +310,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Star ⭐ this repo if you find it useful!**
+## Ecosystem — other tools by the same author
+
+If `langgraph-crosschain` unblocks your multi-agent work, these might too:
+
+| Package | What it does |
+|---------|--------------|
+| [**distill-json**](https://pypi.org/project/distill-json/) | Compress JSON state passed between chains by 60-85% — massive token savings on multi-agent flows |
+| [**tracemaid**](https://pypi.org/project/tracemaid/) | Auto-generate Mermaid diagrams of cross-chain calls for debugging |
+| [**semantic-llm-cache**](https://pypi.org/project/semantic-llm-cache/) | Cache LLM responses by semantic similarity — agents stop re-asking the same questions |
+
+---
+
+## ⭐ Star on GitHub
+
+If this saved you from rolling your own message queue, [star the repo](https://github.com/karthyick/langgraph-crosschain) — it helps others find it.
+
+Built by [Karthick Raja M](https://github.com/karthyick) · [aichargeworks.com](https://aichargeworks.com)
